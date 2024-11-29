@@ -3,9 +3,9 @@ from PIL import Image
 import os
 import threading    
 
-threaded = False
+import kagglehub
+
 def pad_img(img_names, input_dir, output_dir, target_size=500,):
-    global threaded
     # apply max width and height
     count_done = 0
     last = 0
@@ -35,25 +35,25 @@ def pad_img(img_names, input_dir, output_dir, target_size=500,):
                 print(f"Error opening image {filename}: {e}")
         count_done += 1
         if count_done % 50 == 0:
-            if not threaded:
-                if int(count_done / len(img_names) * 100) != last:
-                    print(f"Progress: {int(count_done / len(img_names) * 100)}%")
-                    last = int(count_done / len(img_names) * 100)
-            else:
-                if int(count_done / len(img_names) * 100) != last:
-                    print(f"Thread {threading.get_ident()}Progress: {int(count_done / len(img_names) * 100)}%")
-                    last = int(count_done / len(img_names) * 100)
-            
+            if int(count_done / len(img_names) * 100) != last:
+                print(f"Progress: {int(count_done / len(img_names) * 100)}%")
+                last = int(count_done / len(img_names) * 100)
 if __name__ == "__main__":
-    directory = "../flickr30k/flickr30k_images"
-    padded_dir = "../flickr30k/flickr30k_images_padded"
+    # Download latest version
+    path = kagglehub.dataset_download("eeshawn/flickr30k") 
+    directory = path + "/flickr30k_images"
+    padded_dir = path + "/flickr30k_images_padded"
+    try:
+        os.mkdir(padded_dir)
+    except:
+        pass
+    print("Path to dataset files:", path)
     
     filenames = os.listdir(directory)
-    
-    threaded = True
+
     threads = []
     file_chunks = [] # list of list of filenames for each thread
-    for t in range(4):
+    for t in range(8):
         filename_chunk = filenames[t * (len(filenames) // 4) : max(len(filenames), (t+1) * (len(filenames) // 4))]
         file_chunks.append(filename_chunk)
         
