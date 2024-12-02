@@ -29,12 +29,12 @@ class ImageCaptioner(nn.Module):
             lstm_input = torch.cat((features.unsqueeze(1), embeddings), dim=2)
             lstm_out, states = self.decoder.lstm(lstm_input, states)
             outputs = self.decoder.linear(lstm_out.squeeze(1))
-            predicted = outputs.argmax(2)
+            predicted = outputs.argmax(1)
             for i in range(batch_size):
                 if predicted[i].item() == vocab.word2idx['<END>']:
                     continue
                 caption[i].append(predicted[i].item())
-                    
+
             inputs = predicted
             
         return caption 
