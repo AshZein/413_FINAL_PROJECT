@@ -11,7 +11,7 @@ class FlickrDataset(Dataset):
         self.vocab = vocab
         self.max_length = max_length
         self.transform = transform or transforms.Compose([
-            transforms.Resize((500, 500)),
+            transforms.Resize((224, 224)),
             transforms.ToTensor(),
             transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                std=[0.229, 0.224, 0.225])
@@ -20,10 +20,11 @@ class FlickrDataset(Dataset):
         self.image_captions = []
         with open(caption_file, 'r', encoding='utf-8') as f:
             for line in f:
-                parts = line.strip().split('\t')
-                if len(parts) == 2:
-                    image_name = parts[0].split('#')[0]
-                    caption = parts[1]
+                parts = line.strip().split(',')
+                if len(parts) == 3:
+                    # image_name = parts[0].split('#')[0]
+                    image_name = parts[0]
+                    caption = parts[2]
                     if os.path.exists(os.path.join(image_dir, image_name)):
                         self.image_captions.append((image_name, caption))
 

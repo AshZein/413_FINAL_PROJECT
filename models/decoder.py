@@ -6,8 +6,9 @@ class Decoder(nn.Module):
         super(Decoder, self).__init__()
         
         self.embed = nn.Embedding(vocab_size, embed_size)
+        # inpute size is embed_size * 2, since the input is features (256) + embeddings(256) = 512
         self.lstm = nn.LSTM(
-            input_size=embed_size,
+            input_size=embed_size * 2,
             hidden_size=hidden_size,
             num_layers=num_layers,
             batch_first=True,

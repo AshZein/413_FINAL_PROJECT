@@ -4,7 +4,7 @@ from nltk.tokenize import word_tokenize
 import nltk
 import re
 nltk.download('punkt')
-from utils.validate_data import validate_dataset
+#from utils.validate_data import validate_dataset
 import torch
 import torch.nn as nn
 from torchvision import models
@@ -36,7 +36,7 @@ class Vocabulary:
         with open(caption_file, 'r', encoding='utf-8') as f:
             for line in f:
                 try:
-                    caption = line.strip().split('\t')[1]  # Flickr30k格式
+                    caption = line.strip().split(',')[2]  # Flickr30k格式
                     caption = clean_text(caption)
                     tokens = word_tokenize(caption)
                     self.word_freq.update(tokens)
