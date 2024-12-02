@@ -7,7 +7,7 @@ class Decoder(nn.Module):
         
         self.embed = nn.Embedding(vocab_size, embed_size)
         self.lstm = nn.LSTM(
-            input_size=embed_size,
+            input_size=embed_size * 2,
             hidden_size=hidden_size,
             num_layers=num_layers,
             batch_first=True,
