@@ -25,7 +25,8 @@ class ImageCaptioner(nn.Module):
         
         for _ in range(max_length):
             embeddings = self.decoder.embed(inputs)
-            lstm_input = torch.cat((features.unsqueeze(1), embeddings), dim=2)
+            features_repeat = features.unsqueeze(1)
+            lstm_input = torch.cat((features_repeat, embeddings), dim=2)
             lstm_out, states = self.decoder.lstm(lstm_input, states)
             outputs = self.decoder.linear(lstm_out.squeeze(1))
             predicted = outputs.argmax(1)
@@ -34,6 +35,6 @@ class ImageCaptioner(nn.Module):
                 break
                 
             caption.append(predicted.item())
-            inputs = predicted.unsqueeze(0)
+            inputs = predicted.unsqueeze(0).unsqueeze(0)
             
         return caption 
