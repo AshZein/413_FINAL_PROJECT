@@ -88,11 +88,11 @@ def validate(model, dataloader, vocab, device):
             
             all_predictions.extend([predicted_caption])
             all_references.extend([reference_caption])
-    
+    #print(f"len of all_ref: {len(all_references)} len of all_preds: {len(all_predictions)}")
     # 计算BLEU分数
     bleu4 = 0.0
     for i in range(len(all_predictions)):
-        bleu4 += calculate_bleu(all_references, all_predictions[i])
+        bleu4 += calculate_bleu(all_references[i], all_predictions[i])
     return bleu4 / len(all_predictions) # average of all bleu scores across each in batch
 
 def main(args):
