@@ -106,7 +106,7 @@ def main(args):
     train_dataset, val_dataset = torch.utils.data.random_split(
         dataset, [train_size, val_size]
     )
-    print(f"training set size:{train_size} validation set size: {val_size}"})
+    print(f"training set size:{train_size} validation set size: {val_size}")
     train_loader = DataLoader(
         train_dataset, 
         batch_size=args.batch_size, 

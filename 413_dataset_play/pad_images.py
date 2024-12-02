@@ -28,7 +28,7 @@ def pad_img(img_names, input_dir, output_dir, target_size=500,):
                 right = pad_width - left
                 
                 padded_img = cv2.copyMakeBorder(resized_img, top, bottom, left, right, cv2.BORDER_CONSTANT, value=[0, 0, 0])
-                
+                padded_img = cv2.resize(padded_img, (224, 224))
                 cv2.imwrite(os.path.join(output_dir, filename), padded_img)
                         
             except Exception as e:
