@@ -11,6 +11,7 @@ from models.image_captioner import ImageCaptioner
 from utils.metrics import calculate_bleu
 import argparse
 import time
+from datetime import datetime
 
 def train_epoch(model, dataloader, criterion, optimizer, device, epoch, writer):
     model.train()
@@ -197,6 +198,9 @@ if __name__ == '__main__':
                         help='Minimum word frequency threshold')
     
     args = parser.parse_args()
+    
+    start_time = datetime.now()
+    print(f"Started training at: {start_time.strftime("%d-%m %H:%M")}")
     t0 = time.time()
     main(args) 
     t1 = time.time()
