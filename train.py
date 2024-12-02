@@ -59,25 +59,41 @@ def validate(model, dataloader, vocab, device):
     with torch.no_grad():
         for images, captions in tqdm(dataloader, desc='Validating'):
             images = images.to(device)
-            
+            #print(f"number of captions: {len(captions)}")
             # 生成描述
             predicted_ids = model.generate_caption(images, vocab)
             
             # 转换为文本
-            predicted_caption = [vocab.idx2word[idx] for idx in predicted_ids 
-                               if idx not in [vocab.word2idx['<START>'], 
-                                            vocab.word2idx['<END>'], 
-                                            vocab.word2idx['<PAD>']]]
+            predicted_caption = [[] for i in range(len(predicted_ids))]
+            for i in range(len(predicted_ids)):
+                for idx in predicted_ids[i]:
+                    if idx not in [vocab.word2idx['<START>'], vocab.word2idx['<END>'], vocab.word2idx['<PAD>']]:
+                        predicted_caption[i].append(vocab.idx2word[idx])
+                        
+            # predicted_caption = [vocab.idx2word[idx] for idx in predicted_ids 
+            #                    if idx not in [vocab.word2idx['<START>'], 
+            #                                 vocab.word2idx['<END>'], 
+            #                                 vocab.word2idx['<PAD>']]]
             
-            reference_caption = [[vocab.idx2word[idx.item()] for idx in caption[1:-1]]  
-                               for caption in captions]
+            # reference_caption = [[] for i in range(len(predicted_ids))]
+            # for caption in captions:
+            #     for idx in caption[1:-1]:
+                
+            # reference_caption = [[] for l in range(len(captions))]    
+            # for i in range(len(captions)):
+            #     for idx in captions[i][1:-1]:
+            #         reference_caption[i].append(vocab.idx2word[idx.item()])
+            reference_caption = [[vocab.idx2word[idx.item()] for idx in caption[1:-1]] for caption in captions]
+            
             
             all_predictions.extend([predicted_caption])
             all_references.extend([reference_caption])
     
     # 计算BLEU分数
-    bleu4 = calculate_bleu(all_references, all_predictions)
-    return bleu4
+    bleu4 = 0.0
+    for i in range(len(all_predictions)):
+        bleu4 += calculate_bleu(all_references, all_predictions[i])
+    return bleu4 / len(all_predictions)
 
 def main(args):
     # 设置设备
