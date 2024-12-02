@@ -55,7 +55,7 @@ def validate(model, dataloader, vocab, device):
     model.eval()
     all_predictions = []
     all_references = []
-    
+    #count = 0 # Used for counting iterations for printing out predicted captions after
     with torch.no_grad():
         for images, captions in tqdm(dataloader, desc='Validating'):
             images = images.to(device)
@@ -85,7 +85,10 @@ def validate(model, dataloader, vocab, device):
             #         reference_caption[i].append(vocab.idx2word[idx.item()])
             reference_caption = [[vocab.idx2word[idx.item()] for idx in caption[1:-1]] for caption in captions]
             
-            
+            # if count % 50 == 0:
+            #     print("Predicted captions", predicted_caption)
+            #     print("reference captions", reference_caption)
+            # count += 1
             all_predictions.extend([predicted_caption])
             all_references.extend([reference_caption])
     #print(f"len of all_ref: {len(all_references)} len of all_preds: {len(all_predictions)}")
