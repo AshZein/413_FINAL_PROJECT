@@ -93,7 +93,7 @@ def validate(model, dataloader, vocab, device):
     bleu4 = 0.0
     for i in range(len(all_predictions)):
         bleu4 += calculate_bleu(all_references, all_predictions[i])
-    return bleu4 / len(all_predictions)
+    return bleu4 / len(all_predictions) # average of all bleu scores across each in batch
 
 def main(args):
     # 设置设备
