@@ -200,7 +200,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     
     start_time = datetime.now()
-    print(f"Started training at: {start_time.strftime("%d-%m %H:%M")}")
+    print(f"Started training at: {start_time.strftime('%d-%m %H:%M')}")
     t0 = time.time()
     main(args) 
     t1 = time.time()
