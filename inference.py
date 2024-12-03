@@ -22,10 +22,11 @@ def generate_caption(model, image, vocab, device):
     model.eval()
     with torch.no_grad():
         image = image.to(device)
-        caption_ids = model.generate_caption(image, vocab)
+        caption_ids = model.generate_caption(image, vocab)[0]
         
         # 转换为文本
         caption = []
+        
         for idx in caption_ids:
             word = vocab.idx2word[idx]
             if word == '<END>':
