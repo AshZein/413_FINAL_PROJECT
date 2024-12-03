@@ -1,7 +1,7 @@
 import cv2
-from PIL import Image
 import os
-import threading    
+import sys 
+import threading 
 
 import kagglehub
 
@@ -40,29 +40,41 @@ def pad_img(img_names, input_dir, output_dir, target_size=500,):
                 last = int(count_done / len(img_names) * 100)
 if __name__ == "__main__":
     # Download latest version
-    path = kagglehub.dataset_download("eeshawn/flickr30k") 
-    directory = path + "/flickr30k_images"
-    padded_dir = path + "/flickr30k_images_padded"
+    if len(sys.argv) == 1:
+        path = kagglehub.dataset_download("eeshawn/flickr30k") 
+        directory = path + "/flickr30k_images"
+        padded_dir = path + "/flickr30k_images_padded"
+        try:
+            os.mkdir(padded_dir)
+        except:
+            pass
+        print("Path to dataset files:", path)
+        
+    else:
+        directory = sys.argv[1]
+        padded_dir = directory + "_padded"
+        try:
+            os.mkdir(padded_dir)
+        except:
+            print(f"directory {padded_dir} already exists")
+        
     try:
-        os.mkdir(padded_dir)
-    except:
-        pass
-    print("Path to dataset files:", path)
-    
-    filenames = os.listdir(directory)
+        filenames = os.listdir(directory)
 
-    threads = []
-    file_chunks = [] # list of list of filenames for each thread
-    for t in range(8):
-        filename_chunk = filenames[t * (len(filenames) // 4) : max(len(filenames), (t+1) * (len(filenames) // 4))]
-        file_chunks.append(filename_chunk)
-        
-        thread = threading.Thread(target=pad_img, args=(filename_chunk, directory, padded_dir))
-        threads.append(thread)
-        thread.start()
-        
-    for thread in threads:
-        thread.join()
-        
-    print("ALL DONE")
+        threads = []
+        file_chunks = [] # list of list of filenames for each thread
+        for t in range(8):
+            filename_chunk = filenames[t * (len(filenames) // 4) : max(len(filenames), (t+1) * (len(filenames) // 4))]
+            file_chunks.append(filename_chunk)
+            
+            thread = threading.Thread(target=pad_img, args=(filename_chunk, directory, padded_dir))
+            threads.append(thread)
+            thread.start()
+            
+        for thread in threads:
+            thread.join()
+            
+        print("ALL DONE")
+    except:
+        print(f"No directory: {directory}")
 
