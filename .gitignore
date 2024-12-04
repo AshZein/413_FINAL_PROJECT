@@ -1,2 +1,4 @@
 flickr30k/
 *.pth
+413_model_test_imgs/
+checkpoints/
