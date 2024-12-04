@@ -85,7 +85,7 @@ def main(args):
     print(f"\nGenerated caption: {caption}")
     
     with open("test_img_cap_out.txt", "a") as f:
-        f.write(f"image file: {args.image_path} Caption: {caption}")
+        f.write(f"image file: {args.image_path} Caption: {caption}\n")
     
     # 可视化结果
     if not args.no_plot:
