@@ -1,0 +1,12 @@
+image file: 413_model_test_imgs_padded/table.jpg Caption: a man in a blue shirt is sitting in a chair <UNK>
+image file: 413_model_test_imgs_padded/table.jpg Caption: a man in a blue shirt is sitting in a chair <UNK>
+image file: 413_model_test_imgs_padded/table.jpg Caption: a man in a blue shirt is sitting in a chair <UNK>
+image file: 413_model_test_imgs_padded/abstractpic1.jpg Caption: a man is standing in a doorway with a large knife <UNK>
+image file: 413_model_test_imgs_padded/abstractpic2.jpeg Caption: a man is standing in a doorway <UNK>
+image file: 413_model_test_imgs_padded/dogpersoncouch.png Caption: a dog is playing with a toy <UNK>
+image file: 413_model_test_imgs_padded/personDog.jpg Caption: a man in a black jacket is holding a camera <UNK
+image file: 413_model_test_imgs_padded/sixpeople.jpg Caption: a group of people are standing in front of a large building <UNK>
+image file: 413_model_test_imgs_padded/kidbirthdayparty.png Caption: a group of people are sitting around a table with a red tablecloth <UNK>
+image file: 413_model_test_imgs_padded/hillylandscape.jpg Caption: a man in a red shirt is standing in a field of grass <UNK>
+image file: 413_model_test_imgs_padded/twopeople.jpg Caption: a man in a suit is smiling at a woman in a white shirt <UNK>
+image file: 413_model_test_imgs_padded/threekidsplaying.jpg Caption: two young boys are playing in a field of grass <UNK>
