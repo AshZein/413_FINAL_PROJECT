@@ -84,6 +84,9 @@ def main(args):
     caption = generate_caption(model, image, vocab, device)
     print(f"\nGenerated caption: {caption}")
     
+    with open("test_img_cap_out.txt", "a") as f:
+        f.write(f"image file: {args.image_path} Caption: {caption}")
+    
     # 可视化结果
     if not args.no_plot:
         visualize_result(args.image_path, caption)
