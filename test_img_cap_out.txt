@@ -17,3 +17,4 @@ image file: 413_model_test_imgs_padded/abstractpic2.jpeg Caption: a man in a red
 image file: 413_model_test_imgs_padded/personMostlyBehindTree.jpg Caption: a woman in a red shirt is walking down a steep steep tree <UNK>
 image file: 413_model_test_imgs_padded/personDoorFramePartially.jpg Caption: a young girl in a red shirt is sitting on a bench <UNK>
 image file: 413_model_test_imgs_padded/personDoorPartially2.jpg Caption: a woman in a black shirt is looking at a mirror <UNK>
+image file: 413_model_test_imgs_padded/threekidsplay_reduced.jpg Caption: two young boys are playing with a ball in a field <UNK>
