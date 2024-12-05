@@ -51,11 +51,10 @@ def train_epoch(model, dataloader, criterion, optimizer, device, epoch, writer):
     writer.add_scalar('Training/EpochLoss', avg_loss, epoch)
     return avg_loss
 
-def validate(model, dataloader, criterion, vocab, device):
+def validate(model, dataloader, vocab, device):
     model.eval()
     all_predictions = []
     all_references = []
-    total_val_loss = 0.0
     #count = 0 # Used for counting iterations for printing out predicted captions after
     with torch.no_grad():
         for images, captions in tqdm(dataloader, desc='Validating'):
@@ -73,10 +72,6 @@ def validate(model, dataloader, criterion, vocab, device):
                         
             reference_caption = [[vocab.idx2word[idx.item()] for idx in caption[1:-1]] for caption in captions]
             
-            outputs = model(images, captions)
-            val_loss = criterion(outputs, captions)
-            total_val_loss += val_loss.item()
-            
             all_predictions.extend([predicted_caption])
             all_references.extend([reference_caption])
     #print(f"len of all_ref: {len(all_references)} len of all_preds: {len(all_predictions)}")
@@ -84,7 +79,6 @@ def validate(model, dataloader, criterion, vocab, device):
     bleu4 = 0.0
     for i in range(len(all_predictions)):
         bleu4 += calculate_bleu(all_references[i], all_predictions[i])
-    print(f"Total Validation Loss:{total_val_loss}")
     return bleu4 / len(all_predictions) # average of all bleu scores across each in batch
 
 def main(args):
@@ -159,7 +153,7 @@ def main(args):
         print(f"Training Loss: {train_loss:.4f}")
         
         # 验证
-        bleu_score = validate(model, val_loader, criterion, vocab, device)
+        bleu_score = validate(model, val_loader, vocab, device)
         print(f"BLEU-4 Score: {bleu_score:.4f}")
         
         # 记录到TensorBoard
